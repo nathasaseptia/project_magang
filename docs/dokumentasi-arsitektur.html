@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dokumentasi Arsitektur - PLN WebGIS</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f6fb;
+        color: #1f2937;
+        margin: 0;
+        padding: 30px;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    h1 { color: #0f172a; border-bottom: 4px solid #2563eb; padding-bottom: 10px; }
+    h2 { color: #1d4ed8; margin-top: 45px; border-left: 5px solid #2563eb; padding-left: 12px; }
+    h3 { color: #334155; margin-bottom: 6px; }
+    .section { background: #fff; border-radius: 12px; padding: 25px 28px; margin-top: 22px; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+    .date-badge {
+        display: inline-block; background: #2563eb; color: #fff;
+        padding: 4px 14px; border-radius: 20px; font-weight: 600; font-size: 13px;
+    }
+    pre {
+        background: #0f172a; color: #e2e8f0; padding: 18px 20px; border-radius: 8px;
+        overflow-x: auto; font-size: 13px; line-height: 1.55; font-family: 'Consolas','Courier New',monospace;
+    }
+    .file-label {
+        font-family: 'Consolas',monospace; background: #e0e7ff; color: #1e3a8a;
+        padding: 3px 10px; border-radius: 5px; font-size: 13px; font-weight: 700;
+    }
+    .tree {
+        background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+        padding: 18px 22px; font-family: 'Consolas','Courier New',monospace; font-size: 13.5px;
+        line-height: 1.7; white-space: pre;
+    }
+    .tree b { color: #d97706; }
+    .table-wrap { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+    th, td { border: 1px solid #e2e8f0; padding: 9px 12px; text-align: left; }
+    th { background: #eff6ff; color: #1e3a8a; }
+    .comment { color: #94a3b8; }
+    .kw { color: #c084fc; }
+    .str { color: #86efac; }
+    .note {
+        background: #fef3c7; border-left: 5px solid #f59e0b; padding: 12px 16px;
+        border-radius: 6px; margin-top: 14px; font-size: 13.5px;
+    }
+    .tip {
+        background: #d1fae5; border-left: 5px solid #10b981; padding: 12px 16px;
+        border-radius: 6px; margin-top: 14px; font-size: 13.5px;
+    }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width:800px){ .grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>📐 Dokumentasi Arsitektur Aplikasi</h1>
+<p><b>Project: </b>Monitoring &amp; WebGIS Data Gangguan Penyulang — PLN UID Sumatera Utara<br>
+<b>Stack: </b>Laravel 11 · PHP · MySQL (XAMPP) · Bootstrap · Google Sheets (sebagai sumber data)</p>
+
+<!-- ================= 06 JULI ================= -->
+<h2><span class="date-badge">Senin, 06 Juli 2026</span> &nbsp; Perancangan Struktur Tabel Basis Data</h2>
+
+<div class="section">
+    <h3>🎯 Tujuan</h3>
+    <p>Merancang struktur tabel <code>users</code> (dengan kolom <code>role</code>, <code>uid</code>, <code>up3</code>, <code>ulp</code>) dan tabel <code>units</code> (UP3/ULP) sebagai dasar sistem manajemen pengguna &amp; unit.</p>
+
+    <h3>1️⃣ ERD (Entity Relationship Diagram)</h3>
+    <p>Diagram relasi entitas yang dirancang dengan <b>Mermaid</b>. Untuk screenshot: <b>paste kode berikut ke <code>https://mermaid.live</code></b> lalu screenshot hasilnya → letakkan sebagai foto dokumentasi #1.</p>
+    <pre>erDiagram
+    USERS ||--o{ UNITS : "memiliki scope unit"
+    USERS {
+        bigint id PK
+        string name
+        string email UK
+        string password
+        string role "super_admin|admin|operator"
+        string uid "null utk non-admin"
+        string up3 "scope UP3"
+        string ulp "scope ULP"
+        timestamp created_at
+    }
+    UNITS {
+        bigint id PK
+        string nama "Unit Induk / UP3 / ULP"
+        enum jenis "up3|ulp"
+        string kode "kode unit"
+        string parent_up3 "induk utk unit ULP"
+        timestamp created_at
+    }
+    {"role": "super_admin -> kelola akun &amp; unit (tidak lihat data unit)"}
+    {"role": "admin -> lihat data scope UP3 / UID"}
+    {"role": "operator -> lihat data scope ULP"}</pre>
+
+    <h3>2️⃣ Struktur Tabel via Database (phpMyAdmin)</h3>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th colspan="2">Tabel <code>users</code></th></tr>
+            <tr><th>Kolom</th><th>Tipe</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>bigint, unsigned, auto increment (PK)</td></tr>
+            <tr><td>name</td><td>varchar(255)</td></tr>
+            <tr><td>email</td><td>varchar(255), unique</td></tr>
+            <tr><td>email_verified_at</td><td>timestamp, nullable</td></tr>
+            <tr><td>password</td><td>varchar(255)</td></tr>
+            <tr><td><b>role</b></td><td>varchar(255), default "operator"</td></tr>
+            <tr><td><b>uid</b></td><td>varchar(255), nullable</td></tr>
+            <tr><td><b>up3</b></td><td>varchar(255), nullable</td></tr>
+            <tr><td><b>ulp</b></td><td>varchar(255), nullable</td></tr>
+            <tr><td>remember_token</td><td>varchar(100), nullable</td></tr>
+            <tr><td>created_at / updated_at</td><td>timestamp</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <br>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th colspan="2">Tabel <code>units</code></th></tr>
+            <tr><th>Kolom</th><th>Tipe</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>bigint, unsigned, auto increment (PK)</td></tr>
+            <tr><td>nama</td><td>varchar(255)</td></tr>
+            <tr><td>jenis</td><td>enum('up3','ulp')</td></tr>
+            <tr><td>kode</td><td>varchar(255), nullable</td></tr>
+            <tr><td>parent_up3</td><td>varchar(255), nullable (induk untuk ULP)</td></tr>
+            <tr><td>created_at / updated_at</td><td>timestamp</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="tip">📸 <b>Cara screenshot:</b> jalankan XAMPP → buka <code>http://localhost/phpmyadmin</code> → pilih database → klik tabel <code>users</code> → tab <b>Structure</b> → screenshot. Ulangi untuk tabel <code>units</code>.</div>
+
+    <h3>3️⃣ Kode Migrasi (struktur tabel dalam bentuk kode)</h3>
+    <p><span class="file-label">database/migrations/2026_01_01_000001_add_role_scope_and_create_units_table.php</span></p>
+    <pre><span class="comment">// Menambah kolom role, uid, up3, ulp ke tabel users &amp; membuat tabel units</span>
+Schema::table('users', function (Blueprint $table) {
+    $table-&gt;string('role')-&gt;default('operator')-&gt;after('password');
+    $table-&gt;string('uid')-&gt;nullable()-&gt;after('role');
+    $table-&gt;string('up3')-&gt;nullable()-&gt;after('uid');
+    $table-&gt;string('ulp')-&gt;nullable()-&gt;after('up3');
+});
+
+Schema::create('units', function (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;string('nama');
+    $table-&gt;enum('jenis', ['up3', 'ulp']);
+    $table-&gt;string('kode')-&gt;nullable();
+    $table-&gt;string('parent_up3')-&gt;nullable();
+    $table-&gt;timestamps();
+});</pre>
+</div>
+
+<!-- ================= 07 JULI ================= -->
+<h2><span class="date-badge">Selasa, 07 Juli 2026</span> &nbsp; Menyusun Arsitektur Aplikasi Laravel</h2>
+
+<div class="section">
+    <h3>🎯 Tujuan</h3>
+    <p>Memisahkan <b>Controller</b> (pengendali), <b>Service</b> (logika bisnis), <b>Middleware</b> (keamanan akses), dan <b>View</b> (tampilan), serta membagi aplikasi menjadi modul-modul.</p>
+
+    <h3>1️⃣ Struktur Folder Project</h3>
+    <div class="tree">D:\xampp\htdocs\projectmagangnathasa\pln-webgis
+│
+├── <b>app\</b>
+│   ├── <b>Http\</b>
+│   │   ├── <b>Controllers\</b>        <span class="comment">← Controller (penerima request)</span>
+│   │   │   ├── AuthController.php
+│   │   │   ├── DashboardController.php
+│   │   │   ├── AdminAccountController.php
+│   │   │   └── AdminUnitController.php
+│   │   └── <b>Middleware\</b>         <span class="comment">← Middleware (penjaga akses)</span>
+│   │       ├── Authenticate.php
+│   │       └── RoleMiddleware.php
+│   ├── <b>Models\</b>                 <span class="comment">← Model (User, Unit)</span>
+│   │   ├── User.php
+│   │   └── Unit.php
+│   └── <b>Services\</b>               <span class="comment">← Service (logika bisnis)</span>
+│       └── GoogleSheetService.php
+│
+├── <b>config\</b>                     <span class="comment">← Konfigurasi (services.php)</span>
+├── <b>database\migrations\</b>         <span class="comment">← Skema tabel</span>
+│   └── 2026_01_01_000001_add_role_scope_and_create_units_table.php
+├── <b>routes\</b>
+│   └── web.php                       <span class="comment">← Rute per modul</span>
+└── <b>resources\views\</b>
+    ├── <b>auth\</b>        ← login.blade.php        (Modul Autentikasi)
+    ├── <b>admin_unit\</b>  ← peta, arsip, manajemen-row, ramalan-cuaca
+    │                                  (Modul Dashboard &amp; Arsip)
+    ├── <b>superadmin\</b>  ← akun.blade.php, unit.blade.php
+    │                                  (Modul Manajemen Pengguna &amp; Unit)
+    └── <b>partials\</b>    ← sidebar.blade.php, sidebar-superadmin.blade.php</div>
+
+    <h3>2️⃣ Pembagian Modul</h3>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Modul</th><th>Fungsi</th><th>Controller / View</th><th>Akses Role</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><b>Autentikasi</b></td><td>Login, logout, cek sesi &amp; role</td><td>AuthController · auth/*</td><td>Semua</td></tr>
+            <tr><td><b>Dashboard</b></td><td>Peta lokasi penyulang &amp; data</td><td>DashboardController · admin_unit/peta</td><td>admin, operator</td></tr>
+            <tr><td><b>Arsip Laporan</b></td><td>Arsip data gangguan (tersaring sesuai role)</td><td>DashboardController@arsipData · admin_unit/arsip</td><td>admin, operator</td></tr>
+            <tr><td><b>Manajemen Pengguna</b></td><td>CRUD akun (role/uid/up3/ulp)</td><td>AdminAccountController · superadmin/akun</td><td>super_admin</td></tr>
+            <tr><td><b>Manajemen Unit</b></td><td>CRUD unit UP3/ULP</td><td>AdminUnitController · superadmin/unit</td><td>super_admin</td></tr>
+            <tr><td><b>Chatbot / AI</b></td><td>Asisten otomatis (rencana pengembangan)</td><td>—</td><td>—</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="note">📌 Catatan: modul <b>Chatbot / Asisten AI</b> tercantum dalam desain arsitektur (rencana pengembangan ke depan), saat ini belum diimplementasikan.</div>
+
+    <h3>3️⃣ Rute per Modul (<span class="file-label">routes/web.php</span>)</h3>
+    <pre><span class="comment">// Public routes - Modul Autentikasi</span>
+Route::get('/login',  [AuthController::class, 'showLogin'])-&gt;name('login');
+Route::post('/login', [AuthController::class, 'login'])-&gt;name('login.post');
+
+Route::get('/', fn () =&gt; redirect()-&gt;route('login'));
+
+<span class="comment">// Logout - semua role yang sudah login</span>
+Route::middleware('auth.check')-&gt;group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])-&gt;name('logout');
+});
+
+<span class="comment">// Modul Dashboard &amp; Arsip - khusus admin &amp; operator</span>
+Route::middleware(['auth.check', 'role:admin,operator'])-&gt;group(function () {
+    Route::get('/peta',            [DashboardController::class, 'petaLokasi'])-&gt;name('peta');
+    Route::get('/arsip',           [DashboardController::class, 'arsipData'])-&gt;name('arsip');
+    Route::get('/manajemen-row',   [DashboardController::class, 'manajemenRow'])-&gt;name('manajemen-row');
+    Route::get('/ramalan-cuaca',   [DashboardController::class, 'ramalanCuaca'])-&gt;name('ramalan-cuaca');
+});
+
+<span class="comment">// Modul Manajemen Pengguna &amp; Unit - khusus super_admin</span>
+Route::middleware(['auth.check', 'role:super_admin'])-&gt;group(function () {
+    Route::get('/admin/akun',  [AdminAccountController::class, 'index'])-&gt;name('superadmin.akun');
+    Route::post('/admin/akun', [AdminAccountController::class, 'store'])-&gt;name('superadmin.akun.store');
+    Route::put('/admin/akun/{user}',  [AdminAccountController::class, 'update'])-&gt;name('superadmin.akun.update');
+    Route::delete('/admin/akun/{user}',[AdminAccountController::class, 'destroy'])-&gt;name('superadmin.akun.destroy');
+    Route::get('/admin/unit',  [AdminUnitController::class, 'index'])-&gt;name('superadmin.unit');
+    Route::post('/admin/unit', [AdminUnitController::class, 'store'])-&gt;name('superadmin.unit.store');
+    Route::put('/admin/unit/{unit}',  [AdminUnitController::class, 'update'])-&gt;name('superadmin.unit.update');
+    Route::delete('/admin/unit/{unit}',[AdminUnitController::class, 'destroy'])-&gt;name('superadmin.unit.destroy');
+});</pre>
+
+    <h3>4️⃣ Contoh Middleware (<span class="file-label">app/Http/Middleware/RoleMiddleware.php</span>)</h3>
+    <pre><span class="kw">if</span> (!Auth::check()) {
+    <span class="kw">return</span> redirect()-&gt;route('login');
+}
+$user = Auth::user();
+
+<span class="kw">if</span> (!in_array($user-&gt;role, $roles, <span class="kw">true</span>)) {
+    <span class="comment">// super admin diarahkan ke kelola akun, selainnya ke peta</span>
+    <span class="kw">if</span> ($user-&gt;isSuperAdmin()) {
+        <span class="kw">return</span> redirect()-&gt;route('superadmin.akun');
+    }
+    <span class="kw">return</span> redirect()-&gt;route('peta');
+}
+<span class="kw">return</span> $next($request);</pre>
+
+    <h3>5️⃣ Contoh Service — logika bisnis dipisah dari Controller (<span class="file-label">app/Services/GoogleSheetService.php</span>)</h3>
+    <p>Service menangani pengambilan data dari Google Sheets (fetch, parse CSV, normalisasi koordinat) dan <b>filter data sesuai scope role</b>, sehingga controller tetap ramping.</p>
+    <pre><span class="comment">// Fetch data dari Google Spreadsheet</span>
+<span class="kw">public function</span> fetchData(): array {
+    $response = Http::timeout(20)-&gt;retry(3, 200)-&gt;get(<span class="kw">$this-&gt;</span>csvUrl);
+    <span class="kw">return</span> parseCsv(<span class="kw">$response-&gt;</span>body());
+}
+
+<span class="comment">// Filter data berdasarkan scope role (UID &gt; UP3 &gt; ULP)</span>
+<span class="kw">public function</span> scopeData(array <span class="kw">$data</span>): array {
+    <span class="kw">$user</span> = Auth::user();
+    <span class="kw">if</span> (!<span class="kw">$user</span> || !<span class="kw">$user</span>-&gt;canViewUnitData()) {
+        <span class="kw">return</span> [];   <span class="comment">// super admin tidak lihat data unit</span>
+    }
+    <span class="kw">$scope</span> = <span class="kw">$user</span>-&gt;dataScope();
+    <span class="kw">if</span> (<span class="kw">$scope</span>[<span class="str">'level'</span>] === <span class="str">'uid'</span>) {
+        <span class="kw">return</span> <span class="kw">$data</span>;
+    }
+    ...
+}</pre>
+
+    <h3>6️⃣ Contoh Controller — ramping, hanya panggil service &amp; kirim ke view (<span class="file-label">app/Http/Controllers/DashboardController.php</span>)</h3>
+    <pre><span class="kw">public function</span> arsipData()
+{
+    <span class="kw">$service</span> = <span class="kw">new</span> GoogleSheetService();
+    <span class="kw">$data</span>    = <span class="kw">$service</span>-&gt;scopeData(<span class="kw">$service</span>-&gt;fetchData());
+    <span class="kw">return</span> view(<span class="str">'admin_unit.arsip'</span>, [<span class="str">'data'</span> =&gt; <span class="kw">$data</span>]);
+}</pre>
+
+    <h3>7️⃣ Model User — scope data &amp; helper role (<span class="file-label">app/Models/User.php</span>)</h3>
+    <pre><span class="kw">protected $fillable</span> = [
+    <span class="str">'name'</span>, <span class="str">'email'</span>, <span class="str">'password'</span>,
+    <span class="str">'role'</span>, <span class="str">'uid'</span>, <span class="str">'up3'</span>, <span class="str">'ulp'</span>,
+];
+
+<span class="comment">// Prioritas scope: UID &gt; UP3 &gt; ULP</span>
+<span class="kw">public function</span> dataScope(): array
+{
+    <span class="kw">if</span> (<span class="kw">$this-&gt;</span>uid)  <span class="kw">return</span> [<span class="str">'level'</span> =&gt; <span class="str">'uid'</span>,  <span class="str">'value'</span> =&gt; <span class="kw">$this-&gt;</span>uid];
+    <span class="kw">if</span> (<span class="kw">$this-&gt;</span>up3) <span class="kw">return</span> [<span class="str">'level'</span> =&gt; <span class="str">'up3'</span>, <span class="str">'value'</span> =&gt; <span class="kw">$this-&gt;</span>up3];
+    <span class="kw">if</span> (<span class="kw">$this-&gt;</span>ulp) <span class="kw">return</span> [<span class="str">'level'</span> =&gt; <span class="str">'ulp'</span>, <span class="str">'value'</span> =&gt; <span class="kw">$this-&gt;</span>ulp];
+    <span class="kw">return</span> [<span class="str">'level'</span> =&gt; <span class="str">'uid'</span>, <span class="str">'value'</span> =&gt; <span class="kw">null</span>];
+}</pre>
+
+    <h3>📷 Rangkuman Foto Dokumentasi (Tanggal 07 Juli)</h3>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>No</th><th>Foto / Screenshot</th><th>Dari mana</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Struktur folder project Laravel</td><td>Explorer/editor (lihat bagian 1)</td></tr>
+            <tr><td>2</td><td>Tabel pembagian modul</td><td>Bagian 2 (bisa screenshot dari dokumen ini)</td></tr>
+            <tr><td>3</td><td>Route per modul <code>web.php</code></td><td>Bagian 3</td></tr>
+            <tr><td>4 (bonus)</td><td>Middleware / Service / Controller</td><td>Bagian 4–7</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="tip">💡 Dokumen ini dibuat lebar untuk memudahkan screenshot per bagian. Kamu bisa memakai screenshot keseluruhan, atau <code>Ctrl + Scroll</code> untuk memperbesar lalu screenshot bagian tertentu.</div>
+</div>
+
+</div>
+</body>
+</html>

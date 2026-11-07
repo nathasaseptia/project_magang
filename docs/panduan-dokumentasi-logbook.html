@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Pengisian Dokumentasi Logbook - Screenshot WebGIS</title>
+<style>
+    * { box-sizing: border-box; }
+    body { font-family:'Segoe UI',Arial; background:#f1f5f9; color:#1e293b; margin:0; padding:30px; }
+    .container { max-width: 1100px; margin:0 auto; }
+    h1 { color:#0f172a; border-bottom:4px solid #0ea5e9; padding-bottom:10px; }
+    h2 { color:#0369a1; margin-top:40px; border-left:5px solid #0ea5e9; padding-left:12px; }
+    .day { background:#fff; border:1px solid #e2e8f0; border-left:5px solid #475569; border-radius:8px; padding:18px 20px; margin:14px 0; box-shadow:0 1px 4px rgba(0,0,0,.05); }
+    .day h3 { margin:0 0 4px; color:#334155; font-size:16px; }
+    .task { font-size:13px; color:#64748b; margin-bottom:10px; font-style:italic; }
+    .docs { display:flex; flex-wrap:wrap; gap:14px; }
+    .card { border:1px solid #e2e8f0; border-radius:8px; overflow:hidden; width:230px; background:#f8fafc; }
+    .card img { width:100%; height:130px; object-fit:cover; display:block; background:#0f172a; }
+    .card .cap { padding:8px 10px; font-size:12px; color:#334155; }
+    .card .file { font-family:Consolas; font-size:10.5px; color:#0369a1; padding:0 10px 8px; }
+    .tag { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; margin-left:6px; }
+    .ok { background:#dcfce7; color:#15803d; }
+    .manual { background:#fef3c7; color:#b45309; }
+    .note { background:#e0f2fe; border-left:5px solid #0ea5e9; padding:12px 16px; border-radius:6px; margin:16px 0; font-size:13px; }
+    img.thumb { max-width:600px; border:1px solid #cbd5e1; border-radius:6px; display:block; margin:8px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>📋 Panduan Pengisian Kolom Dokumentasi Logbook</h1>
+<p><b>Project: </b>PLN WebGIS (Peta Penyulang) — Laravel + Bootstrap + Google Sheets<br>
+<b>Lokasi screenshot:</b> <code>D:\xampp\htdocs\projectmagangnathasa\pln-webgis\docs\screenshots\</code></p>
+
+<div class="note">
+⚠️ <b>Penting:</b> Cerita di logbook adalah <b>"Dashboard Monitoring Gangguan Penyulang"</b> (Laravel 12 + Breeze + Tailwind + kartu KPI + filter tanggal + halaman detail), sedangkan project yang kita buat adalah <b>WebGIS 4 halaman</b> (Peta, Arsip, ROW, Cuaca, Bootstrap). Jadi tidak semua fitur di cerita logbook ada di project. Di bawah ini saya petakan screenshot yang tersedia ke hari yang <b>paling cocok</b>, dan beri tanda <span class="tag manual">foto manual</span> untuk bagian yang tidak ada di project (harus diambil manual / ilustrasi lain).
+</div>
+
+<h2>📅 Minggu I (01 - 07 Juli)</h2>
+
+<div class="day"><h3>Rabu, 01 Juli — Pengenalan lingkungan kerja</h3>
+<div class="task">Mengikuti pengenalan lingkungan kerja PT PLN, memahami alur kerja divisi, proses bisnis pelaporan gangguan penyulang.</div>
+<div class="docs"><div class="card"><div class="cap">Foto lokasi kantor / kesan pengenalan</div></div></div>
+<div class="tag manual">foto manual</div> — ambil foto gedung kantor PLN / suasana, atau screenshot logo/branding PLN.</div>
+
+<div class="day"><h3>Kamis, 02 Juli — Diskusi &amp; pengumpulan kebutuhan</h3>
+<div class="task">Diskusi kebutuhan dashboard monitoring gangguan: identifikasi pengguna, indikator, sumber data, fitur (grafik, arsip, ekspor).</div>
+<div class="docs"><div class="card"><div class="cap">Screenshot catatan diskusi / daftar kebutuhan</div></div></div>
+<div class="tag manual">foto manual</div> — catatan hasil diskusi dengan Pak Henri.</div>
+
+<div class="day"><h3>Jumat, 03 Juli — Analisis struktur data Google Sheets</h3>
+<div class="task">Mempelajari struktur data laporan gangguan pada Google Sheets, menganalisis kolom data (penyulang, ULP/UP3, padam/nyala, lama padam, status, lokasi).</div>
+<div class="docs"><div class="card"><div class="cap">Screenshot Google Sheets (struktur kolom data)</div></div></div>
+<div class="tag manual">foto manual</div> — screenshot dari Google Sheets asli (sumber data).</div>
+
+<div class="day"><h3>Senin, 06 Juli — Merancang struktur tabel basis data (users + laporan)</h3>
+<div class="task">Merancang tabel pengguna (users) dengan peran, UID, UP3, ULP, serta tabel laporan gangguan (laporan_gangguans).</div>
+<div class="docs">
+<div class="card"><img src="09-struktur-tabel-users.png"><div class="cap">Struktur tabel <b>users</b></div><div class="file">09-struktur-tabel-users.png</div></div>
+<div class="card"><img src="20-struktur-tabel-units.png"><div class="cap">Struktur tabel <b>units</b></div><div class="file">20-struktur-tabel-units.png</div></div>
+<div class="card"><img src="10-migrasi-users.png"><div class="cap">Kode migrasi tabel</div><div class="file">10-migrasi-users.png</div></div>
+</div>
+<span class="tag ok">OK tersedia</span> 5+ foto siap. Kamu juga bisa tambahkan ERD dari mermaid.live.</div>
+
+<div class="day"><h3>Selasa, 07 Juli — Menyusun arsitektur Laravel (controller, service, middleware, view)</h3>
+<div class="task">Memisahkan controller, service, middleware, dan view; membagi modul autentikasi, dashboard, arsip, manajemen pengguna &amp; unit, chatbot/AI.</div>
+<div class="docs">
+<div class="card"><img src="13-routes.png"><div class="cap">Rute per modul</div><div class="file">13-routes.png</div></div>
+<div class="card"><img src="14-middleware-role.png"><div class="cap">Middleware Role</div><div class="file">14-middleware-role.png</div></div>
+<div class="card"><img src="15-service-sheets.png"><div class="cap">Service Google Sheets</div><div class="file">15-service-sheets.png</div></div>
+<div class="card"><img src="11-model-user.png"><div class="cap">Model User</div><div class="file">11-model-user.png</div></div>
+<div class="card"><img src="12-model-unit.png"><div class="cap">Model Unit</div><div class="file">12-model-unit.png</div></div>
+</div>
+<span class="tag ok">OK tersedia</span> 5 foto: routes, middleware, service, model. Bisa + struktur folder (manual dari explorer).</div>
+
+<h2>📅 Minggu II (08 - 14 Juli)</h2>
+
+<div class="day"><h3>Rabu, 08 Juli — Rancangan antarmuka dashboard (KPI, grafik, arsip, filter)</h3>
+<div class="task">Membuat rancangan UI dashboard: kartu KPI, grafik distribusi gangguan, tabel laporan terbaru, halaman arsip dengan filter.</div>
+<div class="docs"><div class="card"><div class="cap">Mockup / wireframe tampilan dashboard</div></div></div>
+<div class="tag manual">foto manual</div> — buat mockup; atau pakai <code>11-model-user.png</code> sbg contoh tampilan &mdash; utk cerita mockup sebaiknya desain manual.</div>
+
+<div class="day"><h3>Kamis, 09 Juli — Presentasi rancangan kepada pembimbing</h3>
+<div class="task">Mempresentasikan kebutuhan, skema data, dan tampilan kepada pembimbing lapangan.</div>
+<div class="docs"><div class="card"><div class="cap">Foto saat presentasi / screenshot layar</div></div></div>
+<div class="tag manual">foto manual</div> — ambil foto kegiatan presentasi.</div>
+
+<div class="day"><h3>Jumat, 10 Juli — Instalasi Laravel &amp; konfigurasi</h3>
+<div class="task">Instalasi Laravel, konfigurasi .env, koneksi MySQL, memastikan berjalan di XAMPP.</div>
+<div class="docs">
+<div class="card"><img src="01-login-page.png"><div class="cap">Halaman aplikasi berjalan (login)</div><div class="file">01-login-page.png</div></div>
+</div>
+<span class="tag ok">OK</span> + manual: screenshot terminal <code>composer create-project</code> &amp; <code>php artisan serve</code>; screenshot <code>.env</code>.</div>
+
+<h2>📅 Minggu III (13 - 17 Juli)</h2>
+
+<div class="day"><h3>Senin, 13 Juli — Halaman login / autentikasi (Breeze)</h3>
+<div class="task">Implementasi login, registrasi, logout, reset password.</div>
+<div class="docs">
+<div class="card"><img src="01-login-page.png"><div class="cap">Halaman Login</div><div class="file">01-login-page.png</div></div>
+<div class="card"><img src="19-controller-auth.png"><div class="cap">Controller Auth</div><div class="file">19-controller-auth.png</div></div>
+</div>
+<span class="tag ok">OK</span> login + controller auth.</div>
+
+<div class="day"><h3>Selasa, 14 Juli — Verifikasi email, profil, ganti password, hapus akun</h3>
+<div class="task">Melengkapi autentikasi sesuai modul Breeze.</div>
+<div class="docs"><div class="card"><div class="cap">Screenshot profil pengguna / verifikasi email</div></div></div>
+<div class="tag manual">foto manual</div> — fitur ini tidak ada di project WebGIS (pakai Breeze asli), buat manual bila perlu.</div>
+
+<div class="day"><h3>Rabu, 15 Juli — Layout utama (sidebar, navbar, konten)</h3>
+<div class="task">Membangun layout dengan sidebar navigasi, bilah atas, dan area konten.</div>
+<div class="docs">
+<div class="card"><img src="04-dashboard-peta.png"><div class="cap">Tampilan layout + sidebar</div><div class="file">04-dashboard-peta.png</div></div>
+<div class="card"><img src="02-superadmin-kelola-akun.png"><div class="cap">Sidebar super admin</div><div class="file">02-superadmin-kelola-akun.png</div></div>
+</div>
+<span class="tag ok">OK</span> 2 foto layout.</div>
+
+<div class="day"><h3>Kamis, 16 Juli — Migrasi &amp; model tabel</h3>
+<div class="task">Membuat migrasi tabel users, laporan, penambahan kolom role/UID/UP3/ULP, serta model.</div>
+<div class="docs">
+<div class="card"><img src="10-migrasi-users.png"><div class="cap">Migrasi - role/UID/UP3/ULP + units</div><div class="file">10-migrasi-users.png</div></div>
+<div class="card"><img src="11-model-user.png"><div class="cap">Model User</div><div class="file">11-model-user.png</div></div>
+<div class="card"><img src="12-model-unit.png"><div class="cap">Model Unit</div><div class="file">12-model-unit.png</div></div>
+</div>
+<span class="tag ok">OK</span> 3 foto tersedia.</div>
+
+<div class="day"><h3>Jumat, 17 Juli — Service koneksi Google Sheets</h3>
+<div class="task">Membuat service untuk menghubungkan aplikasi dengan Google Sheets melalui URL CSV, serta halaman pasang/muat ulang/putus koneksi.</div>
+<div class="docs">
+<div class="card"><img src="15-service-sheets.png"><div class="cap">Service Google Sheets</div><div class="file">15-service-sheets.png</div></div>
+</div>
+<span class="tag ok">OK</span> 1 foto service + manual halaman pengaturan spreadsheet.</div>
+
+<h2>📅 Minggu IV (20 - 24 Juli)</h2>
+
+<div class="day"><h3>Senin, 20 Juli — Parser CSV</h3>
+<div class="task">Membuat parser CSV untuk membaca baris/kolom dari Google Sheets.</div>
+<div class="docs">
+<div class="card"><img src="15-service-sheets.png"><div class="cap">Parser CSV dalam Service</div><div class="file">15-service-sheets.png</div></div>
+</div>
+<span class="tag ok">OK</span> bagian <code>parseCsv()</code> ada di service screenshot.</div>
+
+<div class="day"><h3>Selasa, 21 Juli — Normalisasi data (tanggal, status, koordinat)</h3>
+<div class="task">Konversi tanggal/jam, petakan status, olah koordinat.</div>
+<div class="docs">
+<div class="card"><img src="15-service-sheets.png"><div class="cap">Normalisasi koordinat (parseCoordinate)</div><div class="file">15-service-sheets.png</div></div>
+</div>
+<span class="tag ok">OK</span> fungsi <code>parseCoordinate()</code> di service.</div>
+
+<div class="day"><h3>Rabu, 22 Juli — Cache &amp; tombol muat ulang data</h3>
+<div class="task">Mekanisme cache untuk mempercepat pemuatan data, tombol muat ulang.</div>
+<div class="docs"><div class="card"><div class="cap">Screenshot halaman tombol muat ulang / kode cache</div></div></div>
+<div class="tag manual">foto manual</div> — fitur cache/tombol reload tidak ada di project WebGIS.</div>
+
+<div class="day"><h3>Kamis, 23 Juli — Pengujian koneksi &amp; pembacaan data</h3>
+<div class="task">Menguji koneksi dan pembacaan data dari beberapa format URL spreadsheet, cek jumlah baris &amp; format kolom.</div>
+<div class="docs"><div class="card"><div class="cap">Screenshot hasil uji coba (log / output)</div></div></div>
+<div class="tag manual">foto manual</div> — bisa pakai terminal hasil test data.</div>
+
+<div class="day"><h3>Jumat, 24 Juli — Perhitungan KPI dashboard</h3>
+<div class="task">Menghitung jumlah total laporan, tervalidasi, pending, ditolak.</div>
+<div class="docs"><div class="card"><div class="cap">Screenshot kartu KPI / kode perhitungan</div></div></div>
+<div class="tag manual">foto manual</div> — fitur KPI belum ada di WebGIS.</div>
+
+<h2>📅 Minggu V (27 - 31 Juli)</h2>
+
+<div class="day"><h3>Senin - Kamis (27-30 Juli) — KPI lanjutan, tren, filter tanggal, halaman detail</h3>
+<div class="task">Perhitungan KPI lanjutan, tren gangguan, filter rentang tanggal, halaman detail laporan.</div>
+<div class="docs">
+<div class="card"><img src="04-dashboard-peta.png"><div class="cap">Halaman utama dashboard</div><div class="file">04-dashboard-peta.png</div></div>
+<div class="card"><img src="05-arsip-data.png"><div class="cap">Arsip data</div><div class="file">05-arsip-data.png</div></div>
+<div class="card"><img src="06-manajemen-row.png"><div class="cap">Manajemen row</div><div class="file">06-manajemen-row.png</div></div>
+</div>
+<span class="tag ok">OK sebagian</span> — pakai screenshot halaman nyata sbg "tampilan dashboard". Fitur KPI/filter/detail belum ada (bila threatens detail hrs manual).</div>
+
+<div class="day"><h3>Jumat, 31 Juli — Halaman detail laporan &amp; presentasi hasil</h3>
+<div class="task">Membuat halaman detail satu laporan; presentasi hasil project.</div>
+<div class="docs">
+<div class="card"><img src="08-operator-peta.png"><div class="cap">Tampilan operator (data terkait ULP)</div><div class="file">08-operator-peta.png</div></div>
+</div>
+<span class="tag ok">OK</span> + manual foto presentasi ke pembimbing.</div>
+
+<div class="note">Screenshot yang bertanda <span class="tag ok">OK tersedia</span> sudah siap di folder <code>docs\screenshots</code>. Untuk bagian bertanda <span class="tag manual">foto manual</span>, karena fiturnya belum ada di project WebGIS, kamu perlu mengambil/membuat sendiri (foto kegiatan, terminal, Google Sheets, dsb.).</div>
+
+</div>
+</body>
+</html>
