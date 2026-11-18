@@ -24,7 +24,6 @@ Route::middleware(['auth.check', 'role:admin,operator'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/peta', [DashboardController::class, 'petaLokasi'])->name('peta');
     Route::get('/arsip', [DashboardController::class, 'arsipData'])->name('arsip');
-    Route::get('/manajemen-row', [DashboardController::class, 'manajemenRow'])->name('manajemen-row');
     Route::get('/ramalan-cuaca', [DashboardController::class, 'ramalanCuaca'])->name('ramalan-cuaca');
     Route::get('/laporan/detail', [DashboardController::class, 'detail'])->name('laporan.detail');
 });

@@ -4,373 +4,452 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - PLN WebGIS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --pln-navy: #0a2540;
+            --pln-blue: #0f5c99;
+            --pln-teal: #14a2ba;
+            --pln-cyan: #7dd3e8;
+            --pln-yellow: #ffc72c;
+            --ink: #0f172a;
+            --muted: #64748b;
+            --line: #e2e8f0;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; height: 100vh; overflow: hidden; }
-
-        .split-container {
-            display: flex;
-            height: 100vh;
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            background: #f6f9fc;
+            color: var(--ink);
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            overflow-x: hidden;
         }
 
-        /* ===== LEFT PANEL: Ilustrasi ===== */
-        .left-panel {
-            width: 55%;
-            background: linear-gradient(160deg, #0a3d52 0%, #125d72 40%, #14a2ba 100%);
+        .login-shell {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 0.92fr 1.08fr;
+            background:
+                radial-gradient(760px 420px at 100% 0%, rgba(20, 162, 186, 0.10), transparent 62%),
+                radial-gradient(560px 320px at 0% 100%, rgba(15, 92, 153, 0.08), transparent 62%),
+                #f6f9fc;
+        }
+
+        .showcase {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            padding: clamp(1rem, 2vw, 1.6rem);
+        }
+
+        .photo-card {
             position: relative;
+            flex: 1;
+            min-height: calc(100vh - clamp(2rem, 4vw, 3.2rem));
+            border-radius: 26px;
             overflow: hidden;
-            padding: 3rem;
+            background:
+                radial-gradient(900px 460px at 20% 0%, rgba(20, 162, 186, 0.42), transparent 62%),
+                linear-gradient(155deg, #082033 0%, #0a3350 48%, #0e5875 100%);
+            box-shadow: 0 30px 70px -34px rgba(10, 37, 64, 0.5);
+            isolation: isolate;
         }
-        .left-panel::before {
-            content: '';
+        .photo-card > img {
             position: absolute;
-            top: -30%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(20,162,186,0.3) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .left-panel::after {
-            content: '';
-            position: absolute;
-            bottom: -20%;
-            left: -15%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .illustration-wrapper {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-        }
-        .illustration-wrapper svg {
-            width: 380px;
-            height: auto;
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2));
-        }
-
-        .brand-text {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            margin-top: 2.5rem;
-        }
-        .brand-text h1 {
-            color: #fff;
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.2;
-        }
-        .brand-text h1 span { color: #7dd3e8; }
-        .brand-text p {
-            color: rgba(255,255,255,0.65);
-            font-size: 0.95rem;
-            margin-top: 0.75rem;
-            font-weight: 400;
-        }
-
-        .floating-dots {
-            position: absolute;
-            z-index: 1;
-        }
-        .dot {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.08);
-            animation: float 6s ease-in-out infinite;
-        }
-        .dot:nth-child(1) { width: 8px; height: 8px; top: 15%; left: 10%; animation-delay: 0s; }
-        .dot:nth-child(2) { width: 12px; height: 12px; top: 25%; right: 15%; animation-delay: 1s; }
-        .dot:nth-child(3) { width: 6px; height: 6px; bottom: 20%; left: 20%; animation-delay: 2s; }
-        .dot:nth-child(4) { width: 10px; height: 10px; bottom: 30%; right: 25%; animation-delay: 3s; }
-        .dot:nth-child(5) { width: 14px; height: 14px; top: 60%; left: 5%; animation-delay: 1.5s; }
-        .dot:nth-child(6) { width: 7px; height: 7px; top: 10%; left: 45%; animation-delay: 0.5s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); opacity: 0.6; }
-            50% { transform: translateY(-20px); opacity: 1; }
-        }
-
-        /* ===== RIGHT PANEL: Form Login ===== */
-        .right-panel {
-            width: 45%;
-            background: #f8fbfd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 3rem;
-        }
-
-        .login-card {
+            inset: 0;
             width: 100%;
-            max-width: 400px;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 0;
+        }
+        .photo-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(180deg, rgba(8, 32, 51, 0.55) 0%, rgba(8, 32, 51, 0.08) 32%, rgba(8, 32, 51, 0.12) 52%, rgba(8, 32, 51, 0.82) 100%),
+                linear-gradient(90deg, rgba(8, 32, 51, 0.35) 0%, transparent 55%);
+            pointer-events: none;
         }
 
-        .login-card .logo-top {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 2.5rem;
-        }
-        .login-card .logo-top .logo-box {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #125d72, #14a2ba);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .photo-top,
+        .photo-bottom {
+            position: absolute;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            padding: clamp(1.2rem, 2.4vw, 1.9rem);
             color: #fff;
-            font-weight: 800;
-            font-size: 14px;
-            letter-spacing: 0.5px;
         }
-        .login-card .logo-top .logo-text {
-            font-size: 0.85rem;
-            color: #64748b;
-            line-height: 1.4;
+        .photo-top {
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
         }
-        .login-card .logo-top .logo-text strong {
+        .photo-bottom { bottom: 0; }
+        .brand { display: flex; align-items: center; gap: 0.7rem; }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            height: 56px;
+            flex: 0 0 auto;
+        }
+        .brand-logo img {
+            height: 100%;
+            width: auto;
             display: block;
-            color: #125d72;
+            filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 1px rgba(255, 255, 255, 0.4));
+        }
+        .brand-text strong {
+            display: block;
             font-size: 1rem;
             font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.15;
+        }
+        .brand-text span {
+            display: block;
+            margin-top: 3px;
+            font-size: 0.73rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            color: rgba(255, 255, 255, 0.72);
         }
 
-        .login-card h2 {
-            font-size: 1.65rem;
+        .live-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #d7fbff;
+            background: rgba(8, 32, 51, 0.4);
+            border: 1px solid rgba(125, 211, 232, 0.42);
+            border-radius: 999px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            white-space: nowrap;
+        }
+        .live-chip::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #34e0c8;
+            box-shadow: 0 0 0 4px rgba(52, 224, 200, 0.22);
+            animation: livePulse 1.8s ease-in-out infinite;
+        }
+        @keyframes livePulse {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(52, 224, 200, 0.22); }
+            50% { box-shadow: 0 0 0 7px rgba(52, 224, 200, 0.06); }
+        }
+
+        .photo-bottom h1 {
+            font-size: clamp(1.45rem, 2.1vw, 1.95rem);
+            line-height: 1.22;
             font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.015em;
+            max-width: 20rem;
         }
-        .login-card .subtitle {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
+        .photo-bottom h1 span {
+            background: linear-gradient(92deg, #7dd3e8 0%, #34e0c8 50%, #ffc72c 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .photo-bottom p {
+            margin-top: 0.55rem;
+            max-width: 22rem;
+            font-size: 0.82rem;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.76);
         }
 
-        .form-group {
-            margin-bottom: 1.25rem;
+        .form-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(1.5rem, 4vw, 3.5rem);
         }
+
+        .form-card {
+            position: relative;
+            width: 100%;
+            max-width: 430px;
+            padding: clamp(1.6rem, 3vw, 2.6rem);
+            background: #fff;
+            border: 1px solid #e6eef5;
+            border-radius: 24px;
+            box-shadow:
+                0 26px 60px -26px rgba(10, 37, 64, 0.32),
+                0 2px 8px rgba(10, 37, 64, 0.05);
+        }
+        .form-card::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 4px;
+            border-radius: 24px 24px 0 0;
+            background: linear-gradient(90deg, var(--pln-blue), var(--pln-teal) 55%, var(--pln-yellow));
+        }
+
+        .card-brand { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1.6rem; }
+        .card-brand .logo {
+            display: flex;
+            align-items: center;
+            height: 50px;
+            flex: 0 0 auto;
+        }
+        .card-brand .logo img { height: 100%; width: auto; display: block; }
+        .card-brand strong {
+            display: block;
+            font-size: 0.98rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.15;
+            color: var(--pln-navy);
+        }
+        .card-brand span {
+            display: block;
+            margin-top: 3px;
+            font-size: 0.74rem;
+            font-weight: 500;
+            color: var(--muted);
+        }
+
+        .form-card h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.25;
+            color: var(--pln-navy);
+            margin-bottom: 0.4rem;
+        }
+        .form-card .subtitle {
+            color: var(--muted);
+            font-size: 0.88rem;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 1.8rem;
+        }
+
+        .error-msg {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 1.2rem;
+            padding: 0.75rem 0.95rem;
+            font-size: 0.82rem;
+            color: #c0281f;
+            background: #fdeaea;
+            border: 1px solid #f6c6c3;
+            border-radius: 12px;
+        }
+        .error-msg svg { flex: 0 0 auto; margin-top: 1px; }
+
+        .form-group { margin-bottom: 1.15rem; }
         .form-group label {
             display: block;
-            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.78rem;
             font-weight: 600;
             color: #334155;
-            margin-bottom: 0.4rem;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.01em;
         }
-        .form-group .input-wrap {
-            position: relative;
-        }
-        .form-group .input-icon {
+        .input-wrap { position: relative; }
+        .input-icon {
             position: absolute;
             left: 14px;
             top: 50%;
             transform: translateY(-50%);
+            display: grid;
+            place-items: center;
             color: #94a3b8;
+            pointer-events: none;
+            transition: color 0.2s;
         }
         .form-group input {
             width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.8rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
+            padding: 0.78rem 1rem 0.78rem 2.75rem;
+            font-family: inherit;
             font-size: 0.9rem;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             color: #1e293b;
-            background: #fff;
-            transition: all 0.2s;
+            background: #fbfdff;
+            border: 1.5px solid var(--line);
+            border-radius: 12px;
             outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
         }
+        .form-group input.has-toggle { padding-right: 3rem; }
+        .form-group input::placeholder { color: #b6c2d1; }
         .form-group input:focus {
-            border-color: #14a2ba;
-            box-shadow: 0 0 0 4px rgba(20,162,186,0.1);
+            background: #fff;
+            border-color: var(--pln-teal);
+            box-shadow: 0 0 0 4px rgba(20, 162, 186, 0.12);
         }
-        .form-group input::placeholder {
-            color: #cbd5e1;
+        .input-wrap:focus-within .input-icon { color: var(--pln-teal); }
+
+        .toggle-pass {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: grid;
+            place-items: center;
+            padding: 7px;
+            color: #94a3b8;
+            background: transparent;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s;
         }
+        .toggle-pass:hover { color: var(--pln-teal); background: #eff7fb; }
+        .toggle-pass svg { width: 18px; height: 18px; }
 
         .form-options {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 1.75rem;
+            margin: 0.25rem 0 1.6rem;
         }
         .remember-me {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.82rem;
-            color: #64748b;
+            font-size: 0.81rem;
+            color: var(--muted);
             cursor: pointer;
+            user-select: none;
         }
         .remember-me input[type="checkbox"] {
             width: 16px;
             height: 16px;
-            accent-color: #14a2ba;
+            accent-color: var(--pln-teal);
             cursor: pointer;
         }
 
         .btn-login {
             width: 100%;
-            padding: 0.85rem;
-            background: linear-gradient(135deg, #125d72 0%, #14a2ba 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            padding: 0.95rem;
+            font-family: inherit;
+            font-size: 0.94rem;
+            font-weight: 700;
             color: #fff;
+            background: linear-gradient(135deg, #0f5c99 0%, #14a2ba 62%, #17b3a3 100%);
             border: none;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            border-radius: 13px;
             cursor: pointer;
-            transition: all 0.3s;
-            letter-spacing: 0.01em;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 14px 28px -12px rgba(20, 162, 186, 0.62);
+            transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
         }
         .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(20,162,186,0.35);
+            filter: brightness(1.05);
+            box-shadow: 0 18px 34px -12px rgba(20, 162, 186, 0.72);
         }
-        .btn-login:active {
-            transform: translateY(0);
+        .btn-login:active { transform: translateY(0); }
+        .btn-login:disabled { cursor: wait; opacity: 0.8; transform: none; }
+        .btn-login .btn-arrow { width: 18px; height: 18px; transition: transform 0.18s; }
+        .btn-login:hover .btn-arrow { transform: translateX(3px); }
+        .btn-login .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.45);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
         }
+        .btn-login.is-loading .spinner { display: inline-block; }
+        .btn-login.is-loading .btn-arrow { display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .error-msg {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #dc2626;
-            padding: 0.75rem 1rem;
-            border-radius: 10px;
-            font-size: 0.82rem;
-            margin-bottom: 1.25rem;
+        .secure-note {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: 0.4rem;
+            margin-top: 1.35rem;
+            font-size: 0.71rem;
+            color: #94a3b8;
+            text-align: center;
         }
+        .secure-note svg { width: 14px; height: 14px; flex: 0 0 auto; }
 
         .footer-text {
+            margin-top: 1rem;
             text-align: center;
-            margin-top: 2rem;
-            font-size: 0.75rem;
-            color: #cbd5e1;
+            font-size: 0.72rem;
+            color: #b6c2d1;
         }
 
-        @media (max-width: 900px) {
-            .split-container { flex-direction: column; }
-            .left-panel { width: 100%; min-height: 260px; padding: 2rem; }
-            .left-panel::before, .left-panel::after { display: none; }
-            .illustration-wrapper svg { width: 200px; }
-            .brand-text h1 { font-size: 1.3rem; }
-            .brand-text p { font-size: 0.8rem; }
-            .right-panel { width: 100%; padding: 2rem; overflow-y: auto; }
-            body { overflow: auto; }
+        @media (max-width: 960px) {
+            .login-shell { grid-template-columns: 1fr; }
+            .showcase { padding: 1rem 1rem 0; }
+            .photo-card { min-height: 230px; }
+            .photo-bottom h1 { font-size: 1.3rem; max-width: 16rem; }
+            .photo-bottom p { display: none; }
+            .form-side { padding: 1.25rem 1rem 2rem; }
+            .form-card { max-width: 460px; }
+        }
+
+        @media (max-width: 420px) {
+            .brand-logo { height: 44px; }
+            .card-brand .logo { height: 44px; }
+            .live-chip { display: none; }
+            .form-card { padding: 1.4rem; border-radius: 20px; }
         }
     </style>
 </head>
 <body>
-    <div class="split-container">
+    <div class="login-shell">
+        <aside class="showcase">
+            <div class="photo-card">
+                <img src="{{ asset('assets/pln-field.jpg') }}" alt="Petugas PLN sedang bertugas di lapangan" onerror="this.style.display='none'">
 
-        <!-- LEFT PANEL: Ilustrasi Kelistrikan PLN -->
-        <div class="left-panel">
-            <div class="floating-dots">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+                <div class="photo-top">
+                    <div class="brand">
+                        <div class="brand-logo">
+                            <img src="{{ asset('assets/logo-pln-full.png') }}" alt="Logo PLN">
+                        </div>
+                        <div class="brand-text">
+                            <strong>PLN WebGIS</strong>
+                            <span>Command Center &middot; Distribusi</span>
+                        </div>
+                    </div>
+                    <span class="live-chip">Realtime</span>
+                </div>
+
+                <div class="photo-bottom">
+                    <h1>Petugas di Lapangan,<br><span>Data di Ujung Jari</span></h1>
+                    <p>Sinergi petugas lapangan dan command center dalam menjaga keandalan jaringan distribusi listrik.</p>
+                </div>
             </div>
+        </aside>
 
-            <div class="illustration-wrapper">
-                <!-- SVG Ilustrasi Kelistrikan / Menara Transmisi -->
-                <svg viewBox="0 0 400 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Background glow -->
-                    <circle cx="200" cy="200" r="160" fill="url(#glow)" opacity="0.15"/>
-
-                    <!-- Ground -->
-                    <ellipse cx="200" cy="380" rx="180" ry="20" fill="rgba(255,255,255,0.08)"/>
-
-                    <!-- Tower base -->
-                    <rect x="185" y="200" width="30" height="180" rx="4" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-                    <rect x="170" y="200" width="60" height="8" rx="2" fill="rgba(255,255,255,0.3)"/>
-                    <rect x="175" y="280" width="50" height="6" rx="2" fill="rgba(255,255,255,0.25)"/>
-                    <rect x="180" y="340" width="40" height="5" rx="2" fill="rgba(255,255,255,0.2)"/>
-
-                    <!-- Cross arms -->
-                    <rect x="120" y="195" width="160" height="6" rx="3" fill="rgba(255,255,255,0.3)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
-                    <rect x="140" y="245" width="120" height="5" rx="2.5" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-
-                    <!-- Insulators -->
-                    <circle cx="130" cy="192" r="6" fill="#7dd3e8" stroke="#fff" stroke-width="1.5"/>
-                    <circle cx="200" cy="192" r="6" fill="#7dd3e8" stroke="#fff" stroke-width="1.5"/>
-                    <circle cx="270" cy="192" r="6" fill="#7dd3e8" stroke="#fff" stroke-width="1.5"/>
-                    <circle cx="150" cy="242" r="5" fill="#7dd3e8" stroke="#fff" stroke-width="1.2"/>
-                    <circle cx="250" cy="242" r="5" fill="#7dd3e8" stroke="#fff" stroke-width="1.2"/>
-
-                    <!-- Power lines (cables) -->
-                    <path d="M100 188 Q150 175 200 188 Q250 200 300 188" stroke="#7dd3e8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                    <path d="M120 240 Q175 228 200 237 Q225 246 280 240" stroke="#7dd3e8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
-
-                    <!-- Lightning bolt / Energy -->
-                    <path d="M195 60 L180 120 L198 120 L183 180" stroke="#facc15" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M205 55 L218 105 L202 105 L215 160" stroke="#facc15" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
-
-                    <!-- Energy glow -->
-                    <circle cx="195" cy="60" r="8" fill="#facc15" opacity="0.6">
-                        <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite"/>
-                        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite"/>
-                    </circle>
-                    <circle cx="195" cy="60" r="4" fill="#fff" opacity="0.9">
-                        <animate attributeName="opacity" values="0.9;0.4;0.9" dur="2s" repeatCount="indefinite"/>
-                    </circle>
-
-                    <!-- Small house on right -->
-                    <rect x="300" y="330" width="55" height="45" rx="3" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                    <polygon points="295,330 327,305 360,330" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                    <rect x="318" y="348" width="14" height="20" rx="2" fill="rgba(20,162,186,0.4)"/>
-                    <rect x="305" y="340" width="10" height="10" rx="1" fill="rgba(250,204,21,0.3)"/>
-                    <rect x="340" y="340" width="10" height="10" rx="1" fill="rgba(250,204,21,0.3)"/>
-
-                    <!-- Power line to house -->
-                    <path d="M280 240 Q290 280 310 305" stroke="#7dd3e8" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5" stroke-dasharray="4 4"/>
-
-                    <!-- Small house on left -->
-                    <rect x="50" y="340" width="45" height="35" rx="3" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-                    <polygon points="45,340 72,320 100,340" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-
-                    <defs>
-                        <radialGradient id="glow">
-                            <stop offset="0%" stop-color="#7dd3e8"/>
-                            <stop offset="100%" stop-color="transparent"/>
-                        </radialGradient>
-                    </defs>
-                </svg>
-            </div>
-
-            <div class="brand-text">
-                <h1>Sistem Pemetaan Spasial<br><span>Gangguan Penyulang PLN</span></h1>
-                <p>WebGIS &mdash; Monitoring & Visualisasi Data Gangguan Penyulang Secara Realtime</p>
-            </div>
-        </div>
-
-        <!-- RIGHT PANEL: Form Login -->
-        <div class="right-panel">
-            <div class="login-card">
-                <div class="logo-top">
-                    <div class="logo-box">PLN</div>
-                    <div class="logo-text">
+        <section class="form-side">
+            <div class="form-card">
+                <div class="card-brand">
+                    <div class="logo">
+                        <img src="{{ asset('assets/logo-pln-full.png') }}" alt="Logo PLN">
+                    </div>
+                    <div>
                         <strong>PLN WebGIS</strong>
-                        Portal Sistem Informasi Geografis
+                        <span>Portal Sistem Informasi Geografis</span>
                     </div>
                 </div>
 
@@ -378,13 +457,13 @@
                 <p class="subtitle">Masuk ke akun Anda untuk melanjutkan</p>
 
                 @if ($errors->any())
-                <div class="error-msg">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7.25 5a.75.75 0 011.5 0v3a.75.75 0 01-1.5 0V5zM8 10.5a.75.75 0 100 1.5.75.75 0 000-1.5z"/></svg>
-                    {{ $errors->first() }}
+                <div class="error-msg" role="alert">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7.25 5a.75.75 0 011.5 0v3a.75.75 0 01-1.5 0V5zM8 10.5a.75.75 0 100 1.5.75.75 0 000-1.5z"/></svg>
+                    <span>{{ $errors->first() }}</span>
                 </div>
                 @endif
 
-                <form method="POST" action="{{ route('login.post') }}">
+                <form method="POST" action="{{ route('login.post') }}" id="loginForm">
                     @csrf
                     <div class="form-group">
                         <label for="email">Alamat Email</label>
@@ -392,7 +471,7 @@
                             <span class="input-icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
                             </span>
-                            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="admin@pln.co.id" required autofocus>
+                            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="admin@pln.co.id" required autofocus autocomplete="username">
                         </div>
                     </div>
 
@@ -402,7 +481,10 @@
                             <span class="input-icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
                             </span>
-                            <input type="password" id="password" name="password" placeholder="Masukkan kata sandi" required>
+                            <input type="password" id="password" name="password" class="has-toggle" placeholder="Masukkan kata sandi" required autocomplete="current-password">
+                            <button type="button" class="toggle-pass" id="togglePass" aria-label="Tampilkan kata sandi">
+                                <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
                         </div>
                     </div>
 
@@ -412,12 +494,50 @@
                         </label>
                     </div>
 
-                    <button type="submit" class="btn-login">Masuk</button>
+                    <button type="submit" class="btn-login" id="loginBtn">
+                        <span class="spinner" aria-hidden="true"></span>
+                        <span class="btn-label">Masuk</span>
+                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
                 </form>
 
-                <p class="footer-text">PLN WebGIS &copy; 2026 &mdash; PT Perusahaan Listrik Negara</p>
+                <div class="secure-note">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                    Koneksi aman &mdash; akses terbatas untuk personel berwenang
+                </div>
+
+                <p class="footer-text">PLN WebGIS &copy; 2026 &middot; PT Perusahaan Listrik Negara</p>
             </div>
-        </div>
+        </section>
     </div>
+
+    <script>
+        (function () {
+            var toggle = document.getElementById('togglePass');
+            var pass = document.getElementById('password');
+            var eye = document.getElementById('eyeIcon');
+            var openEye = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>';
+            var closedEye = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+
+            if (toggle && pass) {
+                toggle.addEventListener('click', function () {
+                    var show = pass.type === 'password';
+                    pass.type = show ? 'text' : 'password';
+                    eye.innerHTML = show ? closedEye : openEye;
+                    toggle.setAttribute('aria-label', show ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi');
+                });
+            }
+
+            var form = document.getElementById('loginForm');
+            var btn = document.getElementById('loginBtn');
+            if (form && btn) {
+                form.addEventListener('submit', function () {
+                    btn.classList.add('is-loading');
+                    btn.disabled = true;
+                    btn.querySelector('.btn-label').textContent = 'Memproses...';
+                });
+            }
+        })();
+    </script>
 </body>
 </html>

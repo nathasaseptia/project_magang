@@ -15,11 +15,6 @@ $menu = [
         route('arsip'),
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>',
     ],
-    'manajemen-row' => [
-        'Manajemen ROW',
-        route('manajemen-row'),
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 5 9h3v4h8V9h3L12 2z"/><path d="M9 21h6"/><path d="M10 21v-8h4v8"/></svg>',
-    ],
     'ramalan-cuaca' => [
         'Ramalan Cuaca',
         route('ramalan-cuaca'),

@@ -31,10 +31,47 @@ class DashboardController extends Controller
 
         $kpis = $this->sheetService->computeKpis($all, $from, $to);
 
-        // Tabel 5 laporan terbaru (terakhir di sheet)
-        $terbaru = array_slice(array_reverse($kpis['filtered']), 0, 5);
+        // 5 laporan terbaru berdasarkan tanggal & jam padam.
+        // Simpan index asli di $all agar link detail selalu menunjuk baris yang benar
+        // walaupun sedang memakai filter rentang tanggal.
+        $rows = [];
+        foreach ($kpis['filtered'] as $row) {
+            $idx = array_search($row, $all, true);
+            $rows[] = ['idx' => $idx === false ? 0 : $idx, 'row' => $row];
+        }
+        usort($rows, fn ($a, $b) => $this->sortKey($b['row']) <=> $this->sortKey($a['row']));
 
-        return view('admin_unit.dashboard', compact('kpis', 'terbaru', 'all', 'from', 'to'));
+        $terbaru = array_map(
+            fn ($x) => $x['row'] + ['_idx' => $x['idx']],
+            array_slice($rows, 0, 5)
+        );
+
+        // Titik koordinat untuk mini map (mengikuti filter tanggal)
+        $mapRows = array_values(array_filter(
+            $kpis['filtered'],
+            fn ($r) => $r['latitude'] !== null && $r['longitude'] !== null
+        ));
+
+        $user  = $request->user();
+        $scope = $user ? $user->dataScope() : ['level' => 'uid', 'value' => null];
+        $syncedAt = now();
+
+        return view('admin_unit.dashboard', compact(
+            'kpis', 'terbaru', 'all', 'from', 'to', 'mapRows', 'scope', 'syncedAt'
+        ));
+    }
+
+    /** Kunci urut laporan: tanggal + jam padam (DD/MM/YYYY HH:MM[:SS]). */
+    private function sortKey(array $row): int
+    {
+        $tgl = trim((string) ($row['tgl_padam'] ?? ''));
+        $jam = trim((string) ($row['jam_padam'] ?? ''));
+        $jam = $jam !== '' ? $jam : '00:00:00';
+
+        $dt = \DateTime::createFromFormat('d/m/Y H:i:s', $tgl . ' ' . $jam)
+            ?: \DateTime::createFromFormat('d/m/Y H:i', $tgl . ' ' . substr($jam, 0, 5));
+
+        return $dt ? $dt->getTimestamp() : 0;
     }
 
     public function detail(Request $request)
@@ -70,61 +107,6 @@ class DashboardController extends Controller
         $penyulangs = $this->sheetService->scopeData($penyulangs);
 
         return view('admin_unit.arsip', compact('penyulangs'));
-    }
-
-    public function manajemenRow()
-    {
-        $penyulangs = $this->sheetService->getPenyulangWithCoords();
-
-        // Skenario ROW: tiang/penyulang menjadi titik infrastruktur,
-        // vegetasi (pohon) dibangkitkan di sekitar tiang dengan jarak acak.
-        $rows = [];
-        $pohonId = 1;
-
-        foreach ($penyulangs as $p) {
-            $lat = $p['latitude'];
-            $lng = $p['longitude'];
-            $nama = $p['nama_penyulang'];
-
-            // Ekstrak kode penyulang (3-4 huruf pertama, misal "GH1")
-            $kode = preg_replace('/\s+/', '', strtoupper($nama));
-            $kode = substr($kode, 0, 4) ?: 'PLN';
-
-            // 1 tiang utama
-            $rows[] = [
-                'id'         => 'tiang-' . strtolower($kode),
-                'jenis'      => 'tiang',
-                'nama'       => 'Tiang ' . $kode,
-                'kode'       => $kode,
-                'latitude'   => $lat,
-                'longitude'  => $lng,
-                'jarak_m'    => 0,
-                'status'     => 'Aman',
-            ];
-
-            // 3-5 pohon di sekitar tiang
-            $jumlahPohon = random_int(3, 5);
-            for ($i = 0; $i < $jumlahPohon; $i++) {
-                $jarak = round((mt_rand() / mt_getrandmax()) * 6, 2);
-                $status = $jarak > 1.5 ? 'Aman' : ($jarak >= 0.5 ? 'Pantau' : 'Kritis');
-
-                $offsetLat = ((mt_rand() / mt_getrandmax()) - 0.5) * 0.0035;
-                $offsetLng = ((mt_rand() / mt_getrandmax()) - 0.5) * 0.0035;
-
-                $rows[] = [
-                    'id'        => 'pohon-' . $pohonId++,
-                    'jenis'     => 'pohon',
-                    'nama'      => 'Pohon #' . ($pohonId - 1),
-                    'kode'      => $kode,
-                    'latitude'  => round($lat + $offsetLat, 6),
-                    'longitude' => round($lng + $offsetLng, 6),
-                    'jarak_m'   => $jarak,
-                    'status'    => $status,
-                ];
-            }
-        }
-
-        return view('admin_unit.manajemen-row', compact('rows', 'penyulangs'));
     }
 
     public function ramalanCuaca()

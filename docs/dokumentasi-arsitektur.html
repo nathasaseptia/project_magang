@@ -190,7 +190,7 @@ Schema::create('units', function (Blueprint $table) {
 │   └── web.php                       <span class="comment">← Rute per modul</span>
 └── <b>resources\views\</b>
     ├── <b>auth\</b>        ← login.blade.php        (Modul Autentikasi)
-    ├── <b>admin_unit\</b>  ← peta, arsip, manajemen-row, ramalan-cuaca
+    ├── <b>admin_unit\</b>  ← peta, arsip, ramalan-cuaca
     │                                  (Modul Dashboard &amp; Arsip)
     ├── <b>superadmin\</b>  ← akun.blade.php, unit.blade.php
     │                                  (Modul Manajemen Pengguna &amp; Unit)
@@ -230,7 +230,6 @@ Route::middleware('auth.check')-&gt;group(function () {
 Route::middleware(['auth.check', 'role:admin,operator'])-&gt;group(function () {
     Route::get('/peta',            [DashboardController::class, 'petaLokasi'])-&gt;name('peta');
     Route::get('/arsip',           [DashboardController::class, 'arsipData'])-&gt;name('arsip');
-    Route::get('/manajemen-row',   [DashboardController::class, 'manajemenRow'])-&gt;name('manajemen-row');
     Route::get('/ramalan-cuaca',   [DashboardController::class, 'ramalanCuaca'])-&gt;name('ramalan-cuaca');
 });
 
