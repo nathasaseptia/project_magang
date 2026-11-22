@@ -81,7 +81,7 @@ class User extends Authenticatable
         if ($this->ulp) {
             return ['level' => 'ulp', 'value' => $this->ulp];
         }
-        return ['level' => 'uid', 'value' => null]; // default lihat semua
+        return ['level' => 'none', 'value' => null];
     }
 
     /**

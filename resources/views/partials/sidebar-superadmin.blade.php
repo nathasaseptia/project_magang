@@ -3,12 +3,12 @@ $menu = [
     'akun' => [
         'Kelola Akun',
         route('superadmin.akun'),
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
     ],
     'unit' => [
         'Kelola Unit',
         route('superadmin.unit'),
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
     ],
 ];
 @endphp
@@ -29,7 +29,7 @@ $menu = [
 
     .sb {
         position: fixed; top: 0; left: 0; bottom: 0; width: var(--sb-w); z-index: 9000;
-        background: linear-gradient(180deg, #30153a 0%, #231035 100%);
+        background: linear-gradient(180deg, #0d2f3c 0%, #0b2530 100%);
         border-right: 1px solid rgba(255,255,255,0.1);
         box-shadow: 4px 0 24px rgba(0,0,0,0.35);
         display: flex; flex-direction: column;
@@ -42,12 +42,13 @@ $menu = [
     .sb-logo {
         width: 42px; height: 42px; flex-shrink: 0;
         display: flex; align-items: center; justify-content: center; overflow: hidden;
+        background: transparent;
     }
     .sb-logo img { width: 100%; height: 100%; object-fit: contain; }
     .sb-brand strong { color: #fff; font-size: 0.92rem; display: block; }
-    .sb-brand span { color: #e9a8d8; font-size: 0.66rem; }
+    .sb-brand span { color: #7dd3e3; font-size: 0.66rem; }
     .sb-label {
-        color: #a05d8d; font-size: 0.62rem; font-weight: 700;
+        color: #5b7a86; font-size: 0.62rem; font-weight: 700;
         letter-spacing: 0.08em; text-transform: uppercase;
         padding: 1rem 0.6rem 0.45rem;
     }
@@ -55,15 +56,15 @@ $menu = [
     .sb-link {
         display: flex; align-items: center; gap: 11px;
         padding: 0.62rem 0.7rem; border-radius: 10px;
-        color: #d3b8ca; text-decoration: none;
-        font-size: 0.82rem; font-weight: 500; transition: all 0.2s;
+        color: #a8c4ce; text-decoration: none;
+        font-size: 0.82rem; font-weight: 600; transition: all 0.2s;
     }
-    .sb-link svg { width: 18px; height: 18px; flex-shrink: 0; color: #a05d8d; transition: color 0.2s; }
+    .sb-link svg { width: 20px; height: 20px; flex-shrink: 0; color: #5b7a86; transition: color 0.2s; }
     .sb-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
-    .sb-link:hover svg { color: #e9a8d8; }
+    .sb-link:hover svg { color: #14a2ba; }
     .sb-link.active {
-        background: linear-gradient(135deg, #a43d8f, #7b2d6b); color: #fff;
-        box-shadow: 0 4px 14px rgba(164,61,143,0.35);
+        background: linear-gradient(135deg, #14a2ba, #125d72); color: #fff;
+        box-shadow: 0 4px 14px rgba(20,162,186,0.35);
     }
     .sb-link.active svg { color: #fff; }
     .sb-foot { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.8rem; }
@@ -101,7 +102,7 @@ $menu = [
         </div>
         <div>
             <strong>PLN WebGIS</strong>
-            <span>Admin Panel</span>
+            <span>Super Admin</span>
         </div>
     </div>
     <div class="sb-label">Menu Admin</div>

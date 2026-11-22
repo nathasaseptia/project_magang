@@ -269,20 +269,26 @@ class GoogleSheetService
 
         $scope = $user->dataScope();
 
+        if ($scope['level'] === 'none' || ($scope['value'] === null && $scope['level'] !== 'uid')) {
+            return [];
+        }
+
         if ($scope['level'] === 'uid') {
             return $data;
         }
 
         $value = strtolower(trim((string) $scope['value']));
 
+        if ($value === '') {
+            return [];
+        }
+
         return array_values(array_filter($data, function ($item) use ($scope, $value) {
-            if (empty($value)) {
-                return true;
-            }
             if ($scope['level'] === 'up3') {
                 return str_contains(strtolower(trim($item['unit_up3'] ?? '')), $value)
                     || str_contains($value, strtolower(trim($item['unit_up3'] ?? '')));
             }
+
             return str_contains(strtolower(trim($item['unit_ulp'] ?? '')), $value)
                 || str_contains($value, strtolower(trim($item['unit_ulp'] ?? '')));
         }));

@@ -431,7 +431,7 @@
                             <span>Command Center &middot; Distribusi</span>
                         </div>
                     </div>
-                    <span class="live-chip">Realtime</span>
+                    <span class="live-chip">Monitoring</span>
                 </div>
 
                 <div class="photo-bottom">

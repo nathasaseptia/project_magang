@@ -10,81 +10,80 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: #f3f2f7; color: #1e1b2e;
+            background: #f0f6f8; color: #0f2a33;
         }
         .container { margin-left: 234px; padding: 28px 32px; }
 
-        .page-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
-        .page-head h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
-        .page-head p { color: #7a7480; font-size: 0.85rem; margin-top: 4px; }
+        .page-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; flex-wrap: wrap; gap: 12px; }
+        .page-head h1 { font-size: 1.55rem; font-weight: 800; letter-spacing: -0.03em; color: #0b2530; }
+        .page-head p { color: #4f6670; font-size: 0.88rem; margin-top: 4px; }
 
         .btn {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 0.6rem 1.1rem; border-radius: 12px; border: none; cursor: pointer;
-            font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.25s;
+            padding: 0.65rem 1.15rem; border-radius: 10px; border: none; cursor: pointer;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.2s;
         }
-        .btn-primary { background: linear-gradient(135deg, #a43d8f, #7b2d6b); color: #fff; box-shadow: 0 6px 18px rgba(164,61,143,0.3); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(164,61,143,0.35); }
-        .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.78rem; border-radius: 9px; }
-        .btn-close { background: #f1f5f9; color: #475569; }
+        .btn-primary { background: linear-gradient(135deg, #14a2ba, #125d72); color: #fff; box-shadow: 0 6px 18px rgba(20,162,186,0.35); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(20,162,186,0.4); }
+        .btn-sm { padding: 0.42rem 0.8rem; font-size: 0.78rem; border-radius: 8px; }
+        .btn-close { background: #e8eef0; color: #2f4b55; }
+        .btn-close:hover { background: #d8e4e8; }
 
-        .flash { padding: 0.85rem 1rem; border-radius: 12px; margin-bottom: 18px; font-size: 0.85rem; font-weight: 500; }
+        .flash { padding: 0.85rem 1rem; border-radius: 10px; margin-bottom: 18px; font-size: 0.85rem; font-weight: 500; }
         .flash.success { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
         .flash.error { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
 
-        .bento-grid { display: grid; gap: 16px; grid-template-columns: repeat(12, 1fr); }
-        .bento-card { background: #fff; border-radius: 18px; padding: 20px; border: 1px solid #eee8f2; box-shadow: 0 4px 20px rgba(30,27,46,0.04); }
+        .bento-grid { display: grid; gap: 18px; grid-template-columns: repeat(12, 1fr); }
+        .bento-card { background: #fff; border-radius: 14px; padding: 20px 22px; border: 1px solid #dce6e9; box-shadow: 0 4px 16px rgba(11,37,48,0.06); }
         .stat-card { position: relative; overflow: hidden; }
-        .stat-card .stat-icon { position: absolute; right: 16px; top: 16px; opacity: 0.18; width: 40px; height: 40px; }
-        .stat-card h3 { font-size: 0.78rem; font-weight: 600; color: #a05d8d; text-transform: uppercase; letter-spacing: 0.05em; }
-        .stat-card .big { font-size: 2.2rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.03em; }
-        .stat-card .small { font-size: 0.78rem; color: #7a7480; margin-top: 4px; }
+        .stat-card .stat-icon { position: absolute; right: 16px; top: 16px; opacity: 0.22; width: 44px; height: 44px; color: #125d72; }
+        .stat-card h3 { font-size: 0.72rem; font-weight: 700; color: #125d72; text-transform: uppercase; letter-spacing: 0.06em; }
+        .stat-card .big { font-size: 2.35rem; font-weight: 800; margin-top: 10px; letter-spacing: -0.04em; color: #0b2530; }
+        .stat-card .small { font-size: 0.78rem; color: #4f6670; margin-top: 4px; }
         .col-4 { grid-column: span 4; }
         .col-6 { grid-column: span 6; }
         .col-12 { grid-column: span 12; }
 
-        .card-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-        .card-title h2 { font-size: 1.05rem; font-weight: 700; }
-        .badge { font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+        .card-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+        .card-title h2 { font-size: 1.1rem; font-weight: 700; color: #0b2530; }
 
-        .unit-type { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+        .unit-type { display: flex; align-items: center; gap: 12px; margin-bottom: 0; }
         .unit-type .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot.up3 { background: #7c3aed; }
-        .dot.ulp { background: #0ea5e9; }
-        .unit-type span { font-size: 0.8rem; font-weight: 600; color: #6b7280; }
-
-        .unit-list { display: flex; flex-wrap: wrap; gap: 10px; }
-        .unit-chip {
-            display: flex; align-items: center; gap: 8px;
-            background: #faf7fc; border: 1px solid #eee8f2; border-radius: 12px;
-            padding: 8px 12px; font-size: 0.82rem; font-weight: 500;
-        }
-        .unit-chip .kode { color: #9a8fa4; font-size: 0.7rem; font-weight: 600; background: #f3eef6; padding: 2px 7px; border-radius: 6px; }
-        .unit-chip .rm { cursor: pointer; border: none; background: none; color: #c4b8cc; padding: 2px; transition: all 0.2s; }
-        .unit-chip .rm:hover { color: #dc2626; }
-        .unit-chip .edit { cursor: pointer; border: none; background: none; color: #c4b8cc; padding: 2px; transition: all 0.2s; }
-        .unit-chip .edit:hover { color: #7b2d6b; }
+        .dot.up3 { background: #125d72; }
+        .dot.ulp { background: #14a2ba; }
+        .unit-type span { font-size: 0.78rem; font-weight: 600; color: #4f6670; display: inline-flex; align-items: center; gap: 6px; }
 
         .table-wrap { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-        thead th { text-align: left; padding: 10px 12px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: #9a8fa4; border-bottom: 1.5px solid #eee8f2; white-space: nowrap; }
-        tbody td { padding: 12px; border-bottom: 1px solid #f3eef6; }
-        tbody tr:hover { background: #faf7fc; }
+        thead th { text-align: left; padding: 10px 12px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #5b7a86; border-bottom: 2px solid #dce6e9; white-space: nowrap; }
+        tbody td { padding: 14px 12px; border-bottom: 1px solid #edf3f5; color: #1a3a44; vertical-align: middle; }
+        tbody tr:hover { background: #f4fafb; }
 
-        .type-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
-        .type-up3 { background: #ede9fe; color: #6d28d9; }
-        .type-ulp { background: #e0f2fe; color: #0369a1; }
+        .type-pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+        .type-up3 { background: #e0f4f7; color: #125d72; border: 1px solid #b8e4ec; }
+        .type-ulp { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
 
-        .modal-overlay { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(30,27,46,0.5); backdrop-filter: blur(3px); align-items: center; justify-content: center; padding: 20px; }
+        .actions-cell { display: flex; align-items: center; gap: 2px; }
+        .actions-cell button { cursor: pointer; border: none; background: none; padding: 6px; border-radius: 8px; color: #4f6670; transition: all 0.2s; display: inline-flex; }
+        .actions-cell button:hover { background: #e0f4f7; color: #0b2530; }
+        .actions-cell button.rm:hover { background: #fef2f2; color: #dc2626; }
+        .actions-cell svg { width: 20px; height: 20px; stroke-width: 2.25; }
+
+        .modal-overlay { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(11,37,48,0.45); backdrop-filter: blur(3px); align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.open { display: flex; }
-        .modal { background: #fff; border-radius: 20px; padding: 26px; width: 100%; max-width: 440px; box-shadow: 0 24px 60px rgba(0,0,0,0.25); }
-        .modal h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 0.78rem; font-weight: 600; color: #4c4556; margin-bottom: 6px; }
-        .form-group input, .form-group select { width: 100%; padding: 0.65rem 0.85rem; border: 1.5px solid #e2dce6; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.85rem; outline: none; transition: all 0.2s; }
-        .form-group input:focus, .form-group select:focus { border-color: #a43d8f; box-shadow: 0 0 0 3px rgba(164,61,143,0.12); }
-        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
-        .note { font-size: 0.72rem; color: #9a8fa4; margin-top: 4px; }
+        .modal { background: #fff; border-radius: 16px; padding: 26px; width: 100%; max-width: 440px; box-shadow: 0 24px 60px rgba(0,0,0,0.2); border: 1px solid #dce6e9; }
+        .modal h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; color: #0b2530; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.75rem; font-weight: 700; color: #2f4b55; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+        .form-group input, .form-group select { width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid #c5d8de; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; transition: all 0.2s; background: #fff; }
+        .form-group input:focus, .form-group select:focus { border-color: #14a2ba; box-shadow: 0 0 0 3px rgba(20,162,186,0.15); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+        .note { font-size: 0.72rem; color: #5b7a86; margin-top: 4px; }
+
+        @media (max-width: 900px) {
+            .container { margin-left: 0; padding: 72px 18px 28px; }
+            .col-4 { grid-column: span 12; }
+        }
     </style>
 </head>
 <body>
@@ -95,7 +94,7 @@
     <div class="page-head">
         <div>
             <h1>Kelola Unit</h1>
-            <p>Kelola data unit UP3 dan ULP</p>
+            <p>Kelola data unit UP3 dan ULP untuk cakupan akses pengguna</p>
         </div>
         <button class="btn btn-primary" onclick="openModal()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -162,15 +161,15 @@
                             <td>-</td>
                             <td>{{ $u3->created_at ? $u3->created_at->format('d M Y') : '-' }}</td>
                             <td>
-                                <div class="unit-chip" style="background:none;border:none;padding:0;">
-                                    <button class="edit" onclick='editUnit(@json($u3))'>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                                <div class="actions-cell">
+                                    <button type="button" onclick='editUnit(@json($u3))' aria-label="Edit unit">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                     </button>
-                                    <form method="POST" action="{{ route('superadmin.unit.destroy', $u3) }}" onsubmit="return confirm('Hapus unit {{ $u3->nama }}?')">
+                                    <form method="POST" action="{{ route('superadmin.unit.destroy', $u3) }}" onsubmit="return confirm('Hapus unit {{ $u3->nama }}?')" style="margin:0;">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="rm" type="submit">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                        <button class="rm" type="submit" aria-label="Hapus unit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
                                         </button>
                                     </form>
                                 </div>
@@ -185,15 +184,15 @@
                             <td>{{ $ul->parent_up3 ?: '-' }}</td>
                             <td>{{ $ul->created_at ? $ul->created_at->format('d M Y') : '-' }}</td>
                             <td>
-                                <div class="unit-chip" style="background:none;border:none;padding:0;">
-                                    <button class="edit" onclick='editUnit(@json($ul))'>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                                <div class="actions-cell">
+                                    <button type="button" onclick='editUnit(@json($ul))' aria-label="Edit unit">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                     </button>
-                                    <form method="POST" action="{{ route('superadmin.unit.destroy', $ul) }}" onsubmit="return confirm('Hapus unit {{ $ul->nama }}?')">
+                                    <form method="POST" action="{{ route('superadmin.unit.destroy', $ul) }}" onsubmit="return confirm('Hapus unit {{ $ul->nama }}?')" style="margin:0;">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="rm" type="submit">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                        <button class="rm" type="submit" aria-label="Hapus unit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
                                         </button>
                                     </form>
                                 </div>

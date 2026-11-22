@@ -259,7 +259,7 @@
         <div class="map-header">
             <div class="title-block">
                 <h2>Peta Lokasi Penyulang PLN</h2>
-                <p>Sebaran lokasi dan status gangguan penyulang secara real-time</p>
+                <p>Sebaran lokasi dan informasi gangguan penyulang pada peta interaktif.</p>
             </div>
             <div class="header-right">
                 <div class="badge" id="countBadge">{{ count($penyulangs) }} Lokasi</div>

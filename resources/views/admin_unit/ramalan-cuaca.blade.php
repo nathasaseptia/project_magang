@@ -183,8 +183,8 @@
     <div class="container">
         <div class="page-header">
             <div>
-                <h2>Ramalan Cuaca &amp; <span>Atmosfer</span> (Windy Engine)</h2>
-                <div class="subtitle">Pemantauan cuaca real-time untuk keselamatan regu penebang pohon ROW</div>
+                <h2>Ramalan Cuaca &amp; <span>Atmosfer</span></h2>
+                <div class="subtitle">Informasi kondisi dan prakiraan cuaca untuk mendukung monitoring gangguan penyulang.</div>
             </div>
             <div class="loc-chip" id="locChip">
                 <span class="loc-dot" id="locDot"></span>
@@ -197,7 +197,7 @@
                 <iframe id="windyFrame" class="windy-frame" allowfullscreen title="Windy Weather"></iframe>
 
                 <div class="ai-float" id="aiFloat">
-                    <div class="ai-kicker">AI Sistem Pakar K3</div>
+                    <div class="ai-kicker">Analisis Kondisi Cuaca</div>
                     <div class="ai-badge badge-safe" id="aiFloatBadge">Menunggu Data</div>
                     <div class="ai-title" id="aiFloatTitle" style="color:#fff;">Menganalisis cuaca...</div>
                     <div class="ai-desc" id="aiFloatDesc">Memuat data atmosfer dari Open-Meteo.</div>
@@ -245,7 +245,7 @@
 
         <div class="ai-card glass" id="aiCard">
             <span class="ai-badge badge-safe" id="aiCardBadge">Menunggu Data</span>
-            <div class="ai-msg" id="aiCardMsg">AI Sistem Pakar K3 sedang menganalisis kondisi cuaca untuk rekomendasi keselamatan kerja.</div>
+            <div class="ai-msg" id="aiCardMsg">Analisis Kondisi Cuaca sedang memproses parameter cuaca untuk mendukung pemantauan gangguan penyulang dan keselamatan kerja.</div>
         </div>
 
         <div class="cards-title">
@@ -342,7 +342,7 @@
         }
 
         function k3Analyze(w, uv) {
-            var level = 'safe', title = 'AMAN', desc = 'Kondisi cuaca mendukung pekerjaan penebangan pohon ROW. Silakan lanjutkan aktivitas dengan tetap mematuhi SOP.';
+            var level = 'safe', title = 'KONDISI RELATIF MENDUKUNG', desc = 'Kondisi relatif mendukung monitoring gangguan penyulang. Tetap perhatikan prosedur keselamatan kerja dan pantau pembaruan cuaca.';
             var code = w.weather_code || 0;
             var wind = w.wind_speed_10m || 0;
             var vis = w.visibility != null ? w.visibility : 10000;
@@ -352,12 +352,12 @@
 
             if (dangerCodes.indexOf(code) !== -1 || wind > 25) {
                 level = 'danger';
-                title = 'BAHAYA - STOP KERJA';
-                desc = 'Deteksi badai petir, hujan deras, atau kecepatan angin melebihi 25 km/jam. Seluruh kegiatan penebangan pohon ROW WAJIB DIHENTIKAN dan personel dievakuasi ke lokasi aman.';
+                title = 'KONDISI BERISIKO - PERHATIAN';
+                desc = 'Kondisi berpotensi mengganggu kegiatan operasional apabila parameter cuaca berada pada kondisi berisiko (misalnya badai petir, hujan deras, atau angin kencang). Prioritaskan keselamatan personel dan sesuaikan rencana kerja di lapangan.';
             } else if (warnCodes.indexOf(code) !== -1 || wind > 15 || vis < 2000) {
                 level = 'warn';
-                title = 'WASPADA - HATI-HATI';
-                desc = 'Terdeteksi hujan ringan, gerimis, kabut, angin di atas 15 km/jam, atau jarak pandang di bawah 2 km. Kerja boleh dilanjutkan dengan pengawasan ekstra dan APD lengkap.';
+                title = 'PERLU DIPERHATIKAN';
+                desc = 'Kondisi perlu diperhatikan apabila terdapat hujan, kabut, angin kencang, atau jarak pandang rendah. Monitoring dan koordinasi lapangan disarankan dilakukan dengan kehati-hatian.';
             }
 
             return { level: level, title: title, desc: desc, code: code, wind: wind, vis: vis };
@@ -365,7 +365,7 @@
 
         function renderAi(k3) {
             var badgeClass = { danger: 'badge-danger', warn: 'badge-warn', safe: 'badge-safe' }[k3.level];
-            var badgeText = { danger: 'BAHAYA / STOP KERJA', warn: 'WASPADA', safe: 'AMAN' }[k3.level];
+            var badgeText = { danger: 'BERISIKO', warn: 'PERHATIAN', safe: 'MENDUKUNG' }[k3.level];
 
             var fb = document.getElementById('aiFloatBadge');
             var ct = document.getElementById('aiFloatTitle');
